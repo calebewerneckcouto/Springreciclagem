@@ -16,7 +16,7 @@ import java.util.List;
 @Table (name="usuario")
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column (name="nome", length = 100)
     private String nome;
@@ -32,4 +32,10 @@ public class Usuario {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name ="usuario_id",referencedColumnName = "id")
     private List<Telefone>telefones;
+
+    public Usuario(String nome, String email, String senha) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+    }
 }

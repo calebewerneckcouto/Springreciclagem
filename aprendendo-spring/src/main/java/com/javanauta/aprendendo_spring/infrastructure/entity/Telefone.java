@@ -15,7 +15,7 @@ import lombok.Setter;
 public class Telefone {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "numero",length = 10)
