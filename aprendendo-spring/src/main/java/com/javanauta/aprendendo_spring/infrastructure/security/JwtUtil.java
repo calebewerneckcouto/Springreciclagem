@@ -25,11 +25,29 @@ public class JwtUtil {
                 .compact();
     }
 
+    public String sanitizeToken(String token) {
+        if (token == null || token.isBlank()) {
+            return "";
+        }
+
+        String value = token.trim();
+
+        if (value.startsWith("\"") && value.endsWith("\"")) {
+            value = value.substring(1, value.length() - 1).trim();
+        }
+
+        while (value.regionMatches(true, 0, "Bearer ", 0, 7)) {
+            value = value.substring(7).trim();
+        }
+
+        return value.replaceAll("\\s+", "");
+    }
+
     public Claims extractClaims(String token) {
         return Jwts.parser()
                 .verifyWith(signingKey)
                 .build()
-                .parseSignedClaims(token)
+                .parseSignedClaims(sanitizeToken(token))
                 .getPayload();
     }
 

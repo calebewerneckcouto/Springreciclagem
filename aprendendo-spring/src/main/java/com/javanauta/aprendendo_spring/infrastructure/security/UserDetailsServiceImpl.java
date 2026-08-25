@@ -3,18 +3,17 @@ package com.javanauta.aprendendo_spring.infrastructure.security;
 
 import com.javanauta.aprendendo_spring.infrastructure.entity.Usuario;
 import com.javanauta.aprendendo_spring.infrastructure.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    // Repositório para acessar dados de usuário no banco de dados
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
     // Implementação do método para carregar detalhes do usuário pelo e-mail
     @Override
@@ -25,8 +24,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         // Cria e retorna um objeto UserDetails com base no usuário encontrado
         return org.springframework.security.core.userdetails.User
-                .withUsername(usuario.getEmail()) // Define o nome de usuário como o e-mail
-                .password(usuario.getSenha()) // Define a senha do usuário
-                .build(); // Constrói o objeto UserDetails
+                .withUsername(usuario.getEmail())
+                .password(usuario.getSenha())
+                .authorities("ROLE_USER")
+                .build();
     }
 }

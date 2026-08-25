@@ -15,4 +15,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     boolean existsByEmail(@Param("email") String email);
 
     Optional<Usuario> findByEmail(String email);
+
+    void deleteByEmail(String email);
 }
